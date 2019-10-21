@@ -4808,7 +4808,6 @@ void VarDecl::setOriginalWrappedProperty(VarDecl *originalProperty) {
   ctx.getImpl().OriginalWrappedProperties[this] = originalProperty;
 }
 
-// SWIFT_ENABLE_TENSORFLOW
 IndexSubset *
 IndexSubset::get(ASTContext &ctx, const SmallBitVector &indices) {
   auto &foldingSet = ctx.getImpl().IndexSubsets;

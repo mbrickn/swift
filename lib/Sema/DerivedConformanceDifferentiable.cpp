@@ -327,8 +327,8 @@ static ValueDecl *deriveDifferentiable_method(
   auto *parentDC = derived.getConformanceContext();
 
   auto *param =
-      new (C) ParamDecl(ParamDecl::Specifier::Default, SourceLoc(), SourceLoc(),
-                        argumentName, SourceLoc(), parameterName, parentDC);
+      new (C) ParamDecl(SourceLoc(), SourceLoc(), argumentName, SourceLoc(),
+                        parameterName, parentDC);
   param->setInterfaceType(parameterType);
   ParameterList *params = ParameterList::create(C, {param});
 
@@ -344,7 +344,8 @@ static ValueDecl *deriveDifferentiable_method(
   funcDecl->setBodySynthesizer(bodySynthesizer.Fn, bodySynthesizer.Context);
 
   funcDecl->setGenericSignature(parentDC->getGenericSignatureOfContext());
-  funcDecl->computeType();
+  // funcDecl->computeType(); // TODO(saeta): Remove me per https://github.com/apple/swift/commit/90fa96d8fada549fa358d49ec0ffbd43ca3fefc8
+  // TODO(saeta): Do we need a call to validateDecl here?
   funcDecl->copyFormalAccessFrom(nominal, /*sourceIsParentContext*/ true);
 
   derived.addMembersToConformanceContext({funcDecl});
@@ -699,7 +700,7 @@ static void addAssociatedTypeAliasDecl(Identifier name,
   aliasDecl->setGenericSignature(sourceDC->getGenericSignatureOfContext());
   cast<IterableDeclContext>(sourceDC->getAsDecl())->addMember(aliasDecl);
   aliasDecl->copyFormalAccessFrom(nominal, /*sourceIsParentContext*/ true);
-  aliasDecl->computeType();
+  // aliasDecl->computeType();  // TODO(saeta): Remove me per https://github.com/apple/swift/commit/90fa96d8fada549fa358d49ec0ffbd43ca3fefc8
   TC.validateDecl(aliasDecl);
   C.addSynthesizedDecl(aliasDecl);
 };
@@ -845,7 +846,7 @@ deriveDifferentiable_TangentVectorStruct(DerivedConformance &derived) {
     aliasDecl->setUnderlyingType(selfType);
     aliasDecl->setImplicit();
     aliasDecl->copyFormalAccessFrom(nominal, /*sourceIsParentContext*/ true);
-    aliasDecl->computeType();
+    // aliasDecl->computeType(); // TODO(saeta): REMOVE ME PER https://github.com/apple/swift/commit/90fa96d8fada549fa358d49ec0ffbd43ca3fefc8
     TC.validateDecl(aliasDecl);
     derived.addMembersToConformanceContext({aliasDecl});
     C.addSynthesizedDecl(aliasDecl);

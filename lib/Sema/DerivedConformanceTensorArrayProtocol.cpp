@@ -227,8 +227,8 @@ static ValueDecl *deriveTensorArrayProtocol_method(
   auto parentDC = derived.getConformanceContext();
 
   auto *param =
-      new (C) ParamDecl(ParamDecl::Specifier::Default, SourceLoc(), SourceLoc(),
-                        argumentName, SourceLoc(), parameterName, parentDC);
+      new (C) ParamDecl(SourceLoc(), SourceLoc(), argumentName, SourceLoc(),
+                        parameterName, parentDC);
   param->setInterfaceType(parameterType);
   ParameterList *params = ParameterList::create(C, {param});
 
@@ -621,13 +621,11 @@ static ValueDecl
       C.getOptionalDecl(), Type(), {baseAddressType});
   Type intType = C.getIntDecl()->getDeclaredType();
 
-  auto *param1 = new (C) ParamDecl(
-      ParamDecl::Specifier::Default, SourceLoc(), SourceLoc(),
+  auto *param1 = new (C) ParamDecl(SourceLoc(), SourceLoc(),
       C.getIdentifier("_owning"), SourceLoc(), C.getIdentifier("tensorHandles"),
       parentDC);
   param1->setInterfaceType(addressType);
-  auto *param2 = new (C) ParamDecl(
-      ParamDecl::Specifier::Default, SourceLoc(), SourceLoc(),
+  auto *param2 = new (C) ParamDecl(SourceLoc(), SourceLoc(),
       C.getIdentifier("count"), SourceLoc(), C.getIdentifier("count"),
       parentDC);
   param2->setInterfaceType(intType);
