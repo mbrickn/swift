@@ -305,7 +305,7 @@ helpful to understand before submitting your first PR.
 ### Building Documentation
 
 To read the compiler documentation, start by installing the
-[Sphinx](http://sphinx-doc.org) documentation generator tool by running the
+[Sphinx](https://sphinx-doc.org) documentation generator tool by running the
 command:
 
     easy_install -U "Sphinx < 2.0"
